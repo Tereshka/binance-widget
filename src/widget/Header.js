@@ -7,6 +7,9 @@ import {
   RadioGroup,
   RadioButtonGroup,
   Select,
+  Input,
+  InputGroup,
+  InputLeftElement,
 } from '@chakra-ui/core';
 
 const CustomRadio = React.forwardRef((props, ref) => {
@@ -33,12 +36,12 @@ const CustomSelect = React.forwardRef((props, ref) => {
       size="sm"  ml="5"
       rounded="20px" variant="filled"
       placeholder="ALL" w="100px"
-      backgroundColor="black"
-      borderColor="black"
+      backgroundColor="gray.700"
+      borderColor="gray.700"
       color="white"
-      _active={{ bg: "black", color: "white" }}
-      _hover={{ bg: "black", color: "white" }}
-      _focus={{ bg: "black", color: "white" }}
+      _active={{ bg: "gray.700", color: "white" }}
+      _hover={{ bg: "gray.700", color: "white" }}
+      _focus={{ bg: "gray.700", color: "white" }}
       isDisabled={isDisabled}
       value={value}
       onChange={onChange}
@@ -57,15 +60,17 @@ function Header(props) {
     setAltsCategory,
     showColumn,
     setShowColumn,
+    searchValue,
+    setSearchValue,
+    orderBy,
+    setOrderBy,
   } = props;
   const altsCategoryValues = ['XRP', 'ETH', 'TRX'];
   const usdCategoryValues = ['USDT', 'BUSD', 'TUSD', 'USDC', 'PAX', 'BKRW', 'EUR', 'IDRT', 'NGN', 'RUB', 'TRY', 'ZAR'];
 
   const onMarketChanged = (event) => {
     setSelectedMarket(event);
-    if (event !== 'ALTS') {
-      setAltsCategory('ALL');
-    }
+    setAltsCategory('ALL');
   }
 
   const onAltsCategoryChanged = (event) => {
@@ -74,6 +79,9 @@ function Header(props) {
 
   const onColumnChange = (event) => {
     setShowColumn(event.target.value);
+    if (['change', 'volume'].includes(orderBy)) {
+      setOrderBy(orderBy === 'change' ? 'volume' : 'change');
+    }
   }
 
   return (
@@ -120,9 +128,22 @@ function Header(props) {
         isInline
         mr="12px"
       >
-        <Radio variantColor="orange" value="1">Change</Radio>
-        <Radio variantColor="orange" value="2">Volume</Radio>
+        <Radio value="1" size="sm" variantColor="orange" fontFamily="body" borderColor="gray.700">Change</Radio>
+        <Radio value="2" size="sm" variantColor="orange" fontFamily="body" borderColor="gray.700">Volume</Radio>
       </RadioGroup>
+      <InputGroup size="sm" alignItems="center">
+        <InputLeftElement children={<Icon size="16px" name="search" color="orange.300" />} />
+        <Input 
+          value={searchValue}
+          onChange={e => setSearchValue(e.target.value)}
+          placeholder="ADA" textTransform="uppercase"
+          width="80px" variant="filled"
+          focusBorderColor="none" outline="none"
+          _active={{ bg: "gray.100", color: "gray.700" }}
+          _hover={{ bg: "gray.100", color: "gray.700" }}
+          _focus={{ bg: "gray.100", color: "gray.700" }}
+        />
+      </InputGroup>
     </Flex>
   );
 }

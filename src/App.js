@@ -9,6 +9,7 @@ function App() {
   const url = 'https://www.binance.com/exchange-api/v1/public/asset-service/product/get-products';
   const wsUrl = 'wss://stream.binance.com/stream?streams=!miniTicker@arr';
   const [products, setProducts] = useState(undefined);
+  const [sortedData, setSortedData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
   const [selectedMarket, setSelectedMarket] = useState('BTC');
   const [altsCategory, setAltsCategory] = useState('ALL');
@@ -17,6 +18,7 @@ function App() {
   const [webSocketStatus, setWebSocketStatus] = useState(false);
   const [orderBy, setOrderBy] = useState('name');
   const [orderDirection, setOrderDirection] = useState('asc');
+  const [searchValue, setSearchValue] = useState('');
   const webSocket = useRef(null);
 
   const fetchData = () => {
@@ -32,7 +34,7 @@ function App() {
     });
   }
 
-  const filterData = () => {
+  const selectData = () => {
     if (products === undefined) return;
     let array =[];
     if (altsCategory === 'ALL' || altsCategory === '') {
@@ -41,6 +43,11 @@ function App() {
       array = products.data.filter(el => el.pm === selectedMarket && el.q === altsCategory);
     }
     array = sortData(array);
+    setSortedData(prev => array);
+  }
+
+  const filterData = () => {
+    const array = sortedData.filter(el => el.b.toLowerCase().includes(searchValue.toLowerCase()));
     setFilteredData(prev => array);
   }
 
@@ -81,6 +88,17 @@ function App() {
           return +a.qv - +b.qv;
         } else {
           return +b.qv - +a.qv;
+        }
+      });
+    }
+    if (orderBy === 'change') {
+      newArray.sort((a, b) => {
+        const changeA = (+a.o - +a.c).toFixed(8);
+        const changeB = (+b.o - +b.c).toFixed(8);
+        if (orderDirection === 'asc') {
+          return changeA - changeB;
+        } else {
+          return changeB - changeA;
         }
       });
     }
@@ -134,6 +152,7 @@ function App() {
   }, []);
 
   useEffect(() => {
+    selectData();
     filterData();
   }, [products, selectedMarket, altsCategory]);
 
@@ -152,14 +171,18 @@ function App() {
   }, [inComingData]);
 
   useEffect(() => {
-    let newArray = [...filteredData];
+    let newArray = [...sortedData];
     newArray = sortData(newArray);
-    setFilteredData(prev => newArray);
-  }, [orderBy, orderDirection]);
+    setSortedData(prev => newArray);
+  }, [orderBy, orderDirection, showColumn]);
+
+  useEffect(() => {
+    filterData();
+  }, [searchValue]);
 
   return (
     <ThemeProvider theme={customTheme}>
-      <Box mx="auto" width="80%">
+      <Box mx="auto" width="90%">
         <Flex flexDirection='row' align='center' justifyContent='space-between'>
           <Heading as="h1">Market</Heading>
           <Button
@@ -177,6 +200,10 @@ function App() {
             setAltsCategory={setAltsCategory}
             showColumn={showColumn}
             setShowColumn={setShowColumn}
+            orderBy={orderBy}
+            setOrderBy={setOrderBy}
+            searchValue={searchValue}
+            setSearchValue={setSearchValue}
           />
           <Content
             data={filteredData}
