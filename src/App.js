@@ -5,6 +5,12 @@ import Header from './widget/Header';
 import Content from './widget/Content';
 import { default as mockData }  from './data.json';
 import {initialState, widgetReducer} from './widgetReducer';
+import {
+  SET_PRODUCTS,
+  UPDATE_PRODUCTS,
+  SET_SORTED_DATA,
+  WEBSOCKET_IS_ALIVE,
+} from './widgetActions';
 
 export const AppContext = createContext();
 
@@ -28,17 +34,17 @@ function App() {
 
     webSocket.current.onopen = () => {
       console.log('Connected websocket');
-      dispatch({ type: 'websocketIsAlive', payload: true });
+      dispatch({ type: WEBSOCKET_IS_ALIVE, payload: true });
     };
 
     webSocket.current.onmessage = (message) => {
       const {data} = JSON.parse(message.data);
-      dispatch({ type: 'updateProducts', payload: data });
+      dispatch({ type: UPDATE_PRODUCTS, payload: data });
     };
 
     webSocket.current.onclose = e => {
       console.log('Socket is closed', e.reason);
-      dispatch({ type: 'websocketIsAlive', payload: false });
+      dispatch({ type: WEBSOCKET_IS_ALIVE, payload: false });
     };
 
     webSocket.current.onerror = err => {
@@ -48,7 +54,7 @@ function App() {
           'Closing socket'
       );
       webSocket.current.close();
-      dispatch({ type: 'websocketIsAlive', payload: false });
+      dispatch({ type: WEBSOCKET_IS_ALIVE, payload: false });
     };
   }
 
@@ -68,12 +74,12 @@ function App() {
     const fetchData = () => {
       fetch(url).then((res) => res.json)
       .then(data => {
-        dispatch({ type: 'products', payload: data });
+        dispatch({ type: SET_PRODUCTS, payload: data });
         connect();
       })
       // There is an error while loading on localhost because of CORS-policy, so getting data from mock
       .catch(err => {
-        dispatch({ type: 'products', payload: mockData });
+        dispatch({ type: SET_PRODUCTS, payload: mockData });
         connect();
       });
     }
@@ -97,7 +103,7 @@ function App() {
         array = products.data.filter(el => el.pm === selectedMarket);
       }
 
-      dispatch({ type: 'sortedData', payload: array });
+      dispatch({ type: SET_SORTED_DATA, payload: array });
     }
 
     selectData();

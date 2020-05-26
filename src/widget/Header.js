@@ -1,5 +1,13 @@
 import React, {useContext} from 'react';
 import {AppContext} from '../App';
+import {
+  SET_SELECTED_MARKET,
+  SET_ALTS_CATEGORY,
+  SET_USD_CATEGORY,
+  SET_ORDER_BY,
+  SET_SHOWN_COLUMN,
+  SET_SEARCH_VALUE,
+} from '../widgetActions';
 
 import {
   Flex,
@@ -12,6 +20,7 @@ import {
   Input,
   InputGroup,
   InputLeftElement,
+  InputRightElement,
 } from '@chakra-ui/core';
 
 const CustomRadio = React.forwardRef((props, ref) => {
@@ -54,7 +63,7 @@ const CustomSelect = React.forwardRef((props, ref) => {
   );
 });
 
-function Header(props) {
+function Header() {
   const { state, dispatch } = useContext(AppContext);
   const {
     selectedMarket,
@@ -69,26 +78,26 @@ function Header(props) {
 
   const onMarketChanged = (event) => {
     if (event !== selectedMarket) {
-      dispatch({ type: 'selectedMarket', payload: event });
-      dispatch({ type: 'altsCategory', payload: 'ALL' });
-      dispatch({ type: 'usdCategory', payload: 'ALL' });
+      dispatch({ type: SET_SELECTED_MARKET, payload: event });
+      dispatch({ type: SET_ALTS_CATEGORY, payload: 'ALL' });
+      dispatch({ type: SET_USD_CATEGORY, payload: 'ALL' });
     }
   }
 
   const onAltsCategoryChanged = (event) => {
     event.persist();
-    dispatch({ type: 'altsCategory', payload: event.target.value });
+    dispatch({ type: SET_ALTS_CATEGORY, payload: event.target.value });
   }
 
   const onUsdCategoryChanged = (event) => {
     event.persist();
-    dispatch({ type: 'usdCategory', payload: event.target.value });
+    dispatch({ type: SET_USD_CATEGORY, payload: event.target.value });
   }
 
   const onColumnChange = (event) => {
-    dispatch({ type: 'showColumn', payload: event.target.value });
+    dispatch({ type: SET_SHOWN_COLUMN, payload: event.target.value });
     if (['change', 'volume'].includes(orderBy)) {
-      dispatch({ type: 'orderBy', payload: orderBy === 'change' ? 'volume' : 'change' });
+      dispatch({ type: SET_ORDER_BY, payload: orderBy === 'change' ? 'volume' : 'change' });
     }
   }
 
@@ -139,17 +148,22 @@ function Header(props) {
         <Radio value='1' size='sm' variantColor='orange' fontFamily='body' borderColor='gray.700'>Change</Radio>
         <Radio value='2' size='sm' variantColor='orange' fontFamily='body' borderColor='gray.700'>Volume</Radio>
       </RadioGroup>
-      <InputGroup size='sm' alignItems='center'>
+      <InputGroup size='sm' >
         <InputLeftElement children={<Icon size='16px' name='search' color='orange.300' />} />
         <Input 
           value={searchValue}
-          onChange={e => dispatch({ type: 'searchValue', payload: e.target.value })}
+          onChange={e => dispatch({ type: SET_SEARCH_VALUE, payload: e.target.value })}
           placeholder='ADA' textTransform='uppercase'
           width='80px' variant='filled'
-          focusBorderColor='none' outline='none'
+          focusBorderColor='none' outline='none' border='none'
           _active={{ bg: 'gray.100', color: 'gray.700' }}
           _hover={{ bg: 'gray.100', color: 'gray.700' }}
           _focus={{ bg: 'gray.100', color: 'gray.700' }}
+        />
+        <InputRightElement
+          children={<Icon name='close' color='gray.500' />}
+          cursor="pointer"
+          onClick={() => dispatch({ type: SET_SEARCH_VALUE, payload: '' })}
         />
       </InputGroup>
     </Flex>

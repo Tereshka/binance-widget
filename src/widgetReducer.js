@@ -1,3 +1,18 @@
+import {
+  SET_PRODUCTS,
+  UPDATE_PRODUCTS,
+  SET_SORTED_DATA,
+  WEBSOCKET_IS_ALIVE,
+  SET_SELECTED_MARKET,
+  SET_ALTS_CATEGORY,
+  SET_USD_CATEGORY,
+  SET_ORDER_BY,
+  SET_ORDER_DIRECTION,
+  SET_SHOWN_COLUMN,
+  SET_SEARCH_VALUE,
+  TOGGLE_FAVOURITE,
+} from './widgetActions';
+
 const initialState = {
   products: undefined,
   sortedData: [],
@@ -15,13 +30,13 @@ const initialState = {
 
 function widgetReducer(state, action) {
   switch (action.type) {
-    case 'products': {
+    case SET_PRODUCTS: {
       return {
         ...state,
         products: action.payload,
       };
     }
-    case 'updateProducts': {
+    case UPDATE_PRODUCTS: {
       let incomingData = action.payload;
         let newProducts = {...state.products};
         for(let i = 0; i < incomingData.length; i++) {
@@ -37,7 +52,7 @@ function widgetReducer(state, action) {
         products: newProducts,
       };
     }
-    case 'sortedData': {
+    case SET_SORTED_DATA: {
       const {sortedData, filteredData } =
         sortAndFilterData(action.payload, state.orderBy, state.orderDirection, state.searchValue);
       return {
@@ -46,38 +61,31 @@ function widgetReducer(state, action) {
         filteredData,
       };
     }
-    case 'filteredData': {
-      const filteredData = filterData(state.sortedData, state.searchValue);
-      return {
-        ...state,
-        filteredData,
-      };
-    }
-    case 'websocketIsAlive': {
+    case WEBSOCKET_IS_ALIVE: {
       return {
         ...state,
         websocketIsAlive: action.payload,
       };
     }
-    case 'selectedMarket': {
+    case SET_SELECTED_MARKET: {
       return {
         ...state,
         selectedMarket: action.payload,
       };
     }
-    case 'altsCategory': {
+    case SET_ALTS_CATEGORY: {
       return {
         ...state,
         altsCategory: action.payload,
       };
     }
-    case 'usdCategory': {
+    case SET_USD_CATEGORY: {
       return {
         ...state,
         usdCategory: action.payload,
       };
     }
-    case 'orderBy': {
+    case SET_ORDER_BY: {
       const {sortedData, filteredData } =
         sortAndFilterData(state.sortedData, action.payload, state.orderDirection, state.searchValue);
       return {
@@ -87,7 +95,7 @@ function widgetReducer(state, action) {
         filteredData,
       };
     }
-    case 'orderDirection': {
+    case SET_ORDER_DIRECTION: {
       const {sortedData, filteredData } =
         sortAndFilterData(state.sortedData, state.orderBy, action.payload, state.searchValue);
       return {
@@ -97,13 +105,13 @@ function widgetReducer(state, action) {
         filteredData,
       };
     }
-    case 'showColumn': {
+    case SET_SHOWN_COLUMN: {
       return {
         ...state,
         showColumn: action.payload,
       };
     }
-    case 'searchValue': {
+    case SET_SEARCH_VALUE: {
       const filteredData = filterData(state.sortedData, action.payload);
       return {
         ...state,
@@ -111,7 +119,7 @@ function widgetReducer(state, action) {
         searchValue: action.payload,
       };
     }
-    case 'toggleFavourite': {
+    case TOGGLE_FAVOURITE: {
       let {isFavourite, value} = action.payload;
       let favList = [...state.favouriteList];
       if (isFavourite) {

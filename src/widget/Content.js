@@ -1,5 +1,10 @@
 import React, {useContext} from 'react';
 import {AppContext} from '../App';
+import {
+  SET_ORDER_BY,
+  SET_ORDER_DIRECTION,
+  TOGGLE_FAVOURITE,
+} from '../widgetActions';
 
 import {
   SimpleGrid,
@@ -29,7 +34,7 @@ const CustomIconButton = React.forwardRef((props, ref) => {
   );
 });
 
-function Content(props) {
+function Content() {
   const { state, dispatch } = useContext(AppContext);
   const {
     filteredData,
@@ -41,19 +46,19 @@ function Content(props) {
 
   const handleChangeOrderBy = (value) => {
     if (value !== orderBy) {
-      dispatch({ type: 'orderBy', payload: value });
-      dispatch({ type: 'orderDirection', payload: 'asc' });
+      dispatch({ type: SET_ORDER_BY, payload: value });
+      dispatch({ type: SET_ORDER_DIRECTION, payload: 'asc' });
     } else {
       handleChangeOrderDirection();
     }
   }
 
   const handleChangeOrderDirection = () => {
-    dispatch({ type: 'orderDirection', payload: orderDirection === 'asc' ? 'desc' : 'asc' });
+    dispatch({ type: SET_ORDER_DIRECTION, payload: orderDirection === 'asc' ? 'desc' : 'asc' });
   }
 
   const handleAddToFavourite = (isFavourite, value) => {
-    dispatch({ type: 'toggleFavourite', payload: {isFavourite, value} });
+    dispatch({ type: TOGGLE_FAVOURITE, payload: {isFavourite, value} });
   }
 
   const renderLines = () => {
