@@ -59,7 +59,9 @@ function App() {
   }
 
   const closeWebSocket = () => {
-    webSocket.current.close();
+    if (webSocket !== null && webSocket.current !== null) {
+      webSocket.current.close();
+    }
   }
 
   const handleWebSocketButton = () => {
