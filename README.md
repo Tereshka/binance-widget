@@ -9,7 +9,7 @@ You can:<br/>
 - add coins to favourite list<br/>
 - stop websocket stream and rerun it for getting updated data<br/>
 
-Used technologies: React, React hooks (useReducer, useContext), fetching REST API, websockets<br />
+Used technologies: React, React hooks (useReducer, useContext), fetching REST API, websockets, chakra-ui<br />
 Rest API: `https://www.binance.com/exchange-api/v1/public/asset-service/product/get-products`<br />
 WebSocket API: `wss://stream.binance.com/stream?streams=!miniTicker@arr`<br />
 
