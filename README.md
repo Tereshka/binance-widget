@@ -4,7 +4,7 @@ You can:<br/>
 - select any market<br />
 - choose a category, if selected market has any
 - filter coins by name<br/>
-- choose last column view: volume or change (I'm not in finance field, so I show difference between open pand latest prices)<br />
+- choose last column view: volume or change (I'm not in finance field, so I show difference between open and latest prices)<br />
 - order data by clicking on column titles<br/>
 - add coins to favourite list<br/>
 - stop websocket stream and rerun it for getting updated data<br/>
