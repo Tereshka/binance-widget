@@ -32,6 +32,7 @@ const CustomRadio = React.forwardRef((props, ref) => {
       aria-checked={isChecked}
       role='radio'
       cursor='pointer'
+      mt='12px'
       isDisabled={isDisabled}
       {...rest}
     >
@@ -102,7 +103,7 @@ function Header() {
   }
 
   return (
-    <Flex flexDirection='row' alignItems='center'>
+    <Flex flexDirection='row' alignItems='center' flexWrap='wrap'>
       <RadioButtonGroup
         value={selectedMarket}
         onChange={onMarketChanged}
@@ -139,7 +140,7 @@ function Header() {
           </CustomSelect>
         </CustomRadio>
       </RadioButtonGroup>
-      <RadioGroup
+      <RadioGroup mt='12px'
         value={showColumn}
         onChange={onColumnChange}
         isInline
@@ -148,7 +149,7 @@ function Header() {
         <Radio value='1' size='sm' variantColor='orange' fontFamily='body' borderColor='gray.700'>Change</Radio>
         <Radio value='2' size='sm' variantColor='orange' fontFamily='body' borderColor='gray.700'>Volume</Radio>
       </RadioGroup>
-      <InputGroup size='sm' >
+      <InputGroup size='sm' mt='12px'>
         <InputLeftElement children={<Icon size='16px' name='search' color='orange.300' />} />
         <Input 
           value={searchValue}

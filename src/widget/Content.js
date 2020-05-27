@@ -83,17 +83,17 @@ function Content() {
             cursor='pointer'
             onClick={() => handleAddToFavourite(isFavourite, el.s)}
           />
-            <Text>{el.b}/{el.q}</Text>
+            <Text fontSize='0.8em'>{el.b}/{el.q}</Text>
           </Flex>
-          <Text my='1'>{el.c}</Text>
+          <Text my='1' fontSize='0.8em'>{el.c}</Text>
           {showColumn === '1' &&
-            <Text my='1'
+            <Text my='1' fontSize='0.8em'
               color={changeValue >= 0 ? 'green.400' : 'red.400'}
             >
               {changeValue}
             </Text>
           }
-          {showColumn === '2' && <Text my='1'>{(+el.qv).toFixed(0)}</Text>}
+          {showColumn === '2' && <Text my='1' fontSize='0.8em'>{(+el.qv).toFixed(0)}</Text>}
         </SimpleGrid>
       </React.Fragment>
     )});
