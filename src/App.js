@@ -16,7 +16,8 @@ export const AppContext = createContext();
 
 function App() {
   const url = 'https://www.binance.com/exchange-api/v1/public/asset-service/product/get-products';
-  const wsUrl = 'wss://stream.binance.com/stream?streams=!miniTicker@arr';
+  // const wsUrl = 'wss://stream.binance.com/stream?streams=!miniTicker@arr';
+  const wsUrl = 'wss://stream.binance.com:9443/stream?streams=!miniTicker@arr';
   const webSocket = useRef(null);
 
   const [state, dispatch] = useReducer(widgetReducer, initialState);
@@ -74,7 +75,7 @@ function App() {
 
   useEffect(() => {
     const fetchData = () => {
-      fetch(url).then((res) => res.json)
+      fetch(url).then((res) => res.json())
       .then(data => {
         dispatch({ type: SET_PRODUCTS, payload: data });
         connect();
@@ -93,7 +94,7 @@ function App() {
 
   useEffect(() => {
     const selectData = () => {
-      if (products === undefined) return;
+      if (products === undefined || products.data === undefined) return;
       let array =[];
       if (selectedMarket === 'FAVOURITE') {
         array = products.data.filter(el => favouriteList.includes(el.s));
