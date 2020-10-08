@@ -1,12 +1,12 @@
 # Binance Widget [LIVE DEMO](https://tereshka.github.io/binance-widget)
-This is a test task to make market widget using React.<br/>
+This is a test task to make a market widget using React.<br/>
 You can:<br/>
 - select any market<br />
 - choose a category, if selected market has any
 - filter coins by name<br/>
 - choose last column view: volume or change (I'm not in finance field, so I show difference between open and latest prices)<br />
 - order data by clicking on column titles<br/>
-- add coins to favourite list<br/>
+- add coins to the favourite list<br/>
 - stop websocket stream and rerun it for getting updated data<br/>
 
 Used technologies: React, React hooks (useReducer, useContext), fetching REST API, websockets, chakra-ui<br />
