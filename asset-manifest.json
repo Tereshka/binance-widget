@@ -1,19 +1,19 @@
 {
   "files": {
-    "main.js": "/binance-widget/static/js/main.e45224a9.chunk.js",
-    "main.js.map": "/binance-widget/static/js/main.e45224a9.chunk.js.map",
+    "main.js": "/binance-widget/static/js/main.5a60f6c9.chunk.js",
+    "main.js.map": "/binance-widget/static/js/main.5a60f6c9.chunk.js.map",
     "runtime-main.js": "/binance-widget/static/js/runtime-main.9793053f.js",
     "runtime-main.js.map": "/binance-widget/static/js/runtime-main.9793053f.js.map",
     "static/js/2.2f896948.chunk.js": "/binance-widget/static/js/2.2f896948.chunk.js",
     "static/js/2.2f896948.chunk.js.map": "/binance-widget/static/js/2.2f896948.chunk.js.map",
     "index.html": "/binance-widget/index.html",
-    "precache-manifest.ff38ccc019e203f7d4267a05004e41f4.js": "/binance-widget/precache-manifest.ff38ccc019e203f7d4267a05004e41f4.js",
+    "precache-manifest.3dd2a623c7749f0a8a18268eabddcbd6.js": "/binance-widget/precache-manifest.3dd2a623c7749f0a8a18268eabddcbd6.js",
     "service-worker.js": "/binance-widget/service-worker.js",
     "static/js/2.2f896948.chunk.js.LICENSE.txt": "/binance-widget/static/js/2.2f896948.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.9793053f.js",
     "static/js/2.2f896948.chunk.js",
-    "static/js/main.e45224a9.chunk.js"
+    "static/js/main.5a60f6c9.chunk.js"
   ]
 }
